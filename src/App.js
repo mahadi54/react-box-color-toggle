@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Box from './Box'
+import boxArray from './boxes.js'
 
 function App() {
+  const [boxes, setBoxes] = useState(boxArray)
+
+  const toggle = (id)=>{
+    setBoxes((prevBoxes)=>{
+      return prevBoxes.map((currentBoxes)=>{
+        return currentBoxes.id === id ? {...currentBoxes, on: !currentBoxes.on } : currentBoxes
+
+      })
+
+    })
+  }
+  const element = boxes.map((box)=>{
+    return <Box toggle={()=> toggle(box.id)} id={box.id} on={box.on}/>
+
+  })
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div className="app">
+      {element}
+      
     </div>
   );
 }
